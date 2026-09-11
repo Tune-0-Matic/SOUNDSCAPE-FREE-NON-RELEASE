@@ -1,0 +1,900 @@
+[gd_scene format=3 uid="uid://dsvbsv4gbu4oq"]
+
+[ext_resource type="Script" uid="uid://b37o5cnvafqbg" path="res://player.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dbrn0n5uxgsc1" path="res://audio_director.gd" id="2_director"]
+[ext_resource type="Script" uid="uid://bmni60i18hidt" path="res://audio_engine.gd" id="3_engine"]
+[ext_resource type="Script" uid="uid://domntvf2rqw32" path="res://visualizer.gd" id="4_eq"]
+[ext_resource type="FontFile" uid="uid://kgbqsssdqc6q" path="res://Px437_IBM_BIOS.ttf" id="5_font"]
+[ext_resource type="Shader" uid="uid://dko5dk6ax6n8a" path="res://crt.gdshader" id="6_crt"]
+[ext_resource type="Script" uid="uid://luwfct3q4gk5" path="res://equalizer.gd" id="7_eq"]
+[ext_resource type="Script" uid="uid://beue3af0ssnyo" path="res://boot.gd" id="8_boot"]
+[ext_resource type="VideoStream" uid="uid://ddc4q7u7acf2q" path="res://intro.ogv" id="11_intro"]
+
+[sub_resource type="StyleBoxFlat" id="SB_btn"]
+content_margin_left = 14.0
+content_margin_top = 5.0
+content_margin_right = 14.0
+content_margin_bottom = 5.0
+bg_color = Color(0.886, 0.886, 0.875, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_hover"]
+content_margin_left = 14.0
+content_margin_top = 5.0
+content_margin_right = 14.0
+content_margin_bottom = 5.0
+bg_color = Color(0.769, 0.788, 0.741, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_btn_pressed"]
+content_margin_left = 14.0
+content_margin_top = 5.0
+content_margin_right = 14.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.8, 0.443, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_grab"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.886, 0.886, 0.875, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_bar_fill"]
+bg_color = Color(0.18, 0.8, 0.443, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_scroll"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_header"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_screen"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_bar_bg"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_module"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.886, 0.886, 0.875, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_tab"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.886, 0.886, 0.875, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.29, 0.333, 0.408, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_tab_sel"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="SB_root"]
+bg_color = Color(0.847, 0.855, 0.827, 1)
+
+[sub_resource type="Theme" id="Theme_main"]
+default_font = ExtResource("5_font")
+default_font_size = 16
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.18, 0.8, 0.443, 1)
+Button/styles/focus = SubResource("SB_btn")
+Button/styles/hover = SubResource("SB_btn_hover")
+Button/styles/normal = SubResource("SB_btn")
+Button/styles/pressed = SubResource("SB_btn_pressed")
+Green/base_type = &"Label"
+Green/colors/font_color = Color(0.18, 0.8, 0.443, 1)
+HScrollBar/styles/grabber = SubResource("SB_grab")
+HScrollBar/styles/grabber_highlight = SubResource("SB_grab")
+HScrollBar/styles/grabber_pressed = SubResource("SB_bar_fill")
+HScrollBar/styles/scroll = SubResource("SB_scroll")
+Header/base_type = &"PanelContainer"
+Header/styles/panel = SubResource("SB_header")
+HeaderLabel/base_type = &"Label"
+HeaderLabel/colors/font_color = Color(1, 1, 1, 1)
+ItemList/colors/font_color = Color(0.769, 0.788, 0.741, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/styles/panel = SubResource("SB_screen")
+ItemList/styles/selected = SubResource("SB_bar_fill")
+ItemList/styles/selected_focus = SubResource("SB_bar_fill")
+Label/colors/font_color = Color(0, 0, 0, 1)
+LineEdit/colors/caret_color = Color(0.18, 0.8, 0.443, 1)
+LineEdit/colors/font_color = Color(0.769, 0.788, 0.741, 1)
+LineEdit/colors/font_placeholder_color = Color(0.769, 0.788, 0.741, 0.45)
+LineEdit/styles/focus = SubResource("SB_bar_bg")
+LineEdit/styles/normal = SubResource("SB_bar_bg")
+LineEdit/styles/read_only = SubResource("SB_bar_bg")
+PanelContainer/styles/panel = SubResource("SB_module")
+PopupMenu/colors/font_color = Color(0.769, 0.788, 0.741, 1)
+PopupMenu/colors/font_hover_color = Color(0, 0, 0, 1)
+PopupMenu/styles/hover = SubResource("SB_bar_fill")
+PopupMenu/styles/panel = SubResource("SB_screen")
+ProgressBar/styles/background = SubResource("SB_bar_bg")
+ProgressBar/styles/fill = SubResource("SB_bar_fill")
+Screen/base_type = &"PanelContainer"
+Screen/styles/panel = SubResource("SB_screen")
+TabContainer/colors/font_hovered_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_selected_color = Color(1, 1, 1, 1)
+TabContainer/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabContainer/styles/panel = SubResource("SB_module")
+TabContainer/styles/tab_hovered = SubResource("SB_tab")
+TabContainer/styles/tab_selected = SubResource("SB_tab_sel")
+TabContainer/styles/tab_unselected = SubResource("SB_tab")
+TabContainer/styles/tabbar_background = SubResource("SB_root")
+VScrollBar/styles/grabber = SubResource("SB_grab")
+VScrollBar/styles/grabber_highlight = SubResource("SB_grab")
+VScrollBar/styles/grabber_pressed = SubResource("SB_bar_fill")
+VScrollBar/styles/scroll = SubResource("SB_scroll")
+VSlider/styles/grabber_area = SubResource("SB_bar_fill")
+VSlider/styles/grabber_area_highlight = SubResource("SB_bar_fill")
+VSlider/styles/slider = SubResource("SB_bar_bg")
+
+[sub_resource type="ShaderMaterial" id="Mat_crt"]
+shader = ExtResource("6_crt")
+shader_parameter/glow_amount = 1.15
+shader_parameter/glow_radius = 2.2
+shader_parameter/scan_strength = 0.3
+shader_parameter/scan_period = 4.0
+shader_parameter/bleed = 0.25
+
+[node name="MediaPlayer" type="PanelContainer" unique_id=542031957]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_main")
+theme_override_styles/panel = SubResource("SB_root")
+script = ExtResource("1_script")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=885790304]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="Main" type="VBoxContainer" parent="Margin" unique_id=1908195038]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TopHeaderBar" type="PanelContainer" parent="Margin/Main" unique_id=194192711]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Header"
+
+[node name="HB" type="HBoxContainer" parent="Margin/Main/TopHeaderBar" unique_id=836401943]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Margin/Main/TopHeaderBar/HB" unique_id=2100572044]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderLabel"
+text = "SOUNDSCAPE BY ZFACTOR PSX"
+
+[node name="Clock" type="Label" parent="Margin/Main/TopHeaderBar/HB" unique_id=1360811350]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "00:00:00"
+
+[node name="TickerBar" type="PanelContainer" parent="Margin/Main" unique_id=1920992638]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+
+[node name="Ticker" type="Label" parent="Margin/Main/TickerBar" unique_id=796522297]
+unique_name_in_owner = true
+layout_mode = 2
+text = "// LINK ESTABLISHED // CODEC OGG/THEORA READY // SAMPLE RATE 44100HZ // NODE 07 NOMINAL // AWAITING INPUT "
+clip_text = true
+
+[node name="Workspace" type="BoxContainer" parent="Margin/Main" unique_id=1604146333]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="LeftColumn" type="VBoxContainer" parent="Margin/Main/Workspace" unique_id=1419144795]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 4
+size_flags_vertical = 3
+
+[node name="ScreenPanel" type="PanelContainer" parent="Margin/Main/Workspace/LeftColumn" unique_id=1648431985]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SVB" type="VBoxContainer" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel" unique_id=796628666]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ScreenHeader" type="PanelContainer" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB" unique_id=871427259]
+layout_mode = 2
+theme_type_variation = &"Header"
+
+[node name="Label" type="Label" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/ScreenHeader" unique_id=1042004093]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "VISUAL_EQUALIZER_FEED"
+
+[node name="Screen" type="PanelContainer" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB" unique_id=308654675]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"Screen"
+
+[node name="Video" type="VideoStreamPlayer" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/Screen" unique_id=1941458270]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="VizBox" type="SubViewportContainer" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/Screen" unique_id=1730989502]
+texture_filter = 1
+material = SubResource("Mat_crt")
+layout_mode = 2
+mouse_filter = 2
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/Screen/VizBox" unique_id=2061559623]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(328, 225)
+render_target_update_mode = 4
+
+[node name="Viz" type="Control" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/Screen/VizBox/SubViewport" unique_id=1473859114]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("4_eq")
+
+[node name="NoSignal" type="Label" parent="Margin/Main/Workspace/LeftColumn/ScreenPanel/SVB/Screen" unique_id=1980638613]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Green"
+text = "[ NO SIGNAL ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightSidebar" type="PanelContainer" parent="Margin/Main/Workspace" unique_id=1215320820]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(575, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tabs" type="TabContainer" parent="Margin/Main/Workspace/RightSidebar" unique_id=272235152]
+layout_mode = 2
+current_tab = 0
+
+[node name="TRACKS" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=971306051]
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_tab_index = 0
+
+[node name="Search" type="LineEdit" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS" unique_id=723729900]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "SEARCH..."
+clear_button_enabled = true
+
+[node name="SortRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS" unique_id=464819401]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Sort" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS/SortRow" unique_id=1938417024]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SORT: PATH"
+
+[node name="TbsAdd" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS/SortRow" unique_id=1679180891]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-> TBS"
+
+[node name="Tracks" type="ItemList" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS" unique_id=469632169]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+
+[node name="Count" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TRACKS" unique_id=625848791]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 TRACKS // 0 FOLDERS"
+
+[node name="FOLDERS" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=138544178]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_tab_index = 1
+
+[node name="Folders" type="ItemList" parent="Margin/Main/Workspace/RightSidebar/Tabs/FOLDERS" unique_id=2011385958]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Row" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/FOLDERS" unique_id=1180919052]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="AddFolder" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/FOLDERS/Row" unique_id=2011941274]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ADD FOLDER"
+
+[node name="RemoveFolder" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/FOLDERS/Row" unique_id=2004807346]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "REMOVE FOLDER"
+
+[node name="Rescan" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/FOLDERS/Row" unique_id=267906757]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SCAN SONGS"
+
+[node name="VISUAL" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=1322001986]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_tab_index = 2
+
+[node name="Skin" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=958039571]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SKIN: WIN98"
+
+[node name="VizMode" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=849782670]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MODE: SEGMENTS"
+
+[node name="ColorRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=1050232331]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="SensLabel" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=919974982]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SENSITIVITY"
+
+[node name="Sens" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=1162579438]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="TiltLabel" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=1450554535]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TILT"
+
+[node name="Tilt" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=389914832]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="HeightLabel" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=1003008467]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HEIGHT"
+
+[node name="Height" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=62669292]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="SpeedLabel" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=236728132]
+layout_mode = 2
+text = "SPEED"
+
+[node name="Speed" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=407863347]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="Pad" type="Control" parent="Margin/Main/Workspace/RightSidebar/Tabs/VISUAL" unique_id=1689130529]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EQ" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=1062554345]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_tab_index = 3
+
+[node name="TopRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=1672822435]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="EqMode" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/TopRow" unique_id=471200024]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "EQ: OFF"
+
+[node name="EqAdapt" type="CheckBox" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/TopRow" unique_id=1931688797]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "ADAPT"
+
+[node name="PresetRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=1983356053]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/PresetRow" unique_id=1643277970]
+layout_mode = 2
+text = "PRESET:"
+
+[node name="EqPreset" type="OptionButton" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/PresetRow" unique_id=1862083106]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EqPresetSave" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/PresetRow" unique_id=1617017238]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SAVE"
+
+[node name="NameRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=337721958]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/NameRow" unique_id=1493843299]
+layout_mode = 2
+text = "NAME:"
+
+[node name="EqPresetName" type="LineEdit" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/NameRow" unique_id=1342035835]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_length = 18
+
+[node name="EzPanel" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=808878892]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="AdvPanel" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=715580073]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 2
+
+[node name="TBassRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=509928890]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/TBassRow" unique_id=116396546]
+layout_mode = 2
+text = "T-BASS"
+
+[node name="TBass" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/TBassRow" unique_id=822721742]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="BBERow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ" unique_id=1210289275]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/BBERow" unique_id=219173777]
+layout_mode = 2
+text = "BBE"
+
+[node name="BBE" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/EQ/BBERow" unique_id=503277325]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="TBS" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=616485245]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_tab_index = 4
+
+[node name="FadeRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=1918302299]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Fade" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FadeRow" unique_id=2043920920]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FADE: ON"
+
+[node name="FadeTimeRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=1789197361]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FadeTimeRow" unique_id=1592443940]
+layout_mode = 2
+text = "FADE TIME (MS):"
+
+[node name="FadeMs" type="LineEdit" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FadeTimeRow" unique_id=322705011]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1000"
+alignment = 1
+max_length = 5
+
+[node name="PlayDelayRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=128861787]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/PlayDelayRow" unique_id=442325572]
+layout_mode = 2
+text = "PLAY DELAY (MS):"
+
+[node name="DelayMs" type="LineEdit" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/PlayDelayRow" unique_id=1720157561]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "250"
+alignment = 1
+max_length = 4
+
+[node name="FeedSizeRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=1005053824]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FeedSizeRow" unique_id=1384899945]
+layout_mode = 2
+text = "VISUAL FEED SIZE:"
+
+[node name="FeedSize" type="OptionButton" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FeedSizeRow" unique_id=2097051602]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FpsRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=98793351]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FpsRow" unique_id=1299846815]
+layout_mode = 2
+text = "MAX FRAMERATE:"
+
+[node name="MaxFps" type="LineEdit" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/FpsRow" unique_id=1144910952]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "30"
+alignment = 1
+max_length = 3
+
+[node name="BeatRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/BeatRow"]
+layout_mode = 2
+text = "BEAT TRACKING:"
+
+[node name="BeatTrack" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/BeatRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OFF"
+
+[node name="BoostRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=146351261]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BoostLabel" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/BoostRow" unique_id=1586727178]
+unique_name_in_owner = true
+layout_mode = 2
+text = "VOLUME BOOST: 0"
+
+[node name="Boost" type="ProgressBar" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/BoostRow" unique_id=1004281724]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="LayoutRow" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="L" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/LayoutRow"]
+layout_mode = 2
+text = "LAYOUT SETTINGS:"
+
+[node name="Layout" type="OptionButton" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/LayoutRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TbsList" type="ItemList" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=338910972]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+
+[node name="Row" type="HBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=446132413]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TbsRemove" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/Row" unique_id=1302831575]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "REMOVE"
+
+[node name="TbsClear" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS/Row" unique_id=900856651]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CLEAR ALL"
+
+[node name="TbsCount" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/TBS" unique_id=354596866]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 TO BE SORTED"
+
+[node name="STATS" type="VBoxContainer" parent="Margin/Main/Workspace/RightSidebar/Tabs" unique_id=314964901]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="Stats" type="Label" parent="Margin/Main/Workspace/RightSidebar/Tabs/STATS" unique_id=1185936533]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "SOURCE..DEMO_TONE.WAV"
+
+[node name="Reboot" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/STATS" unique_id=1376236871]
+unique_name_in_owner = true
+layout_mode = 2
+text = "REBOOT"
+
+[node name="ScrubRow" type="HBoxContainer" parent="Margin/Main" unique_id=638047940]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Elapsed" type="Label" parent="Margin/Main/ScrubRow" unique_id=2037588153]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:00"
+
+[node name="Scrub" type="ProgressBar" parent="Margin/Main/ScrubRow" unique_id=906978310]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="Total" type="Label" parent="Margin/Main/ScrubRow" unique_id=2083711489]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:00"
+
+[node name="ControlDeck" type="HBoxContainer" parent="Margin/Main" unique_id=1956257699]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Prev" type="Button" parent="Margin/Main/ControlDeck" unique_id=252539820]
+unique_name_in_owner = true
+layout_mode = 2
+text = "|<"
+
+[node name="Play" type="Button" parent="Margin/Main/ControlDeck" unique_id=1593201212]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PLAY"
+
+[node name="Stop" type="Button" parent="Margin/Main/ControlDeck" unique_id=1870460192]
+unique_name_in_owner = true
+layout_mode = 2
+text = "STOP"
+
+[node name="Next" type="Button" parent="Margin/Main/ControlDeck" unique_id=514337650]
+unique_name_in_owner = true
+layout_mode = 2
+text = ">|"
+
+[node name="Shuffle" type="Button" parent="Margin/Main/ControlDeck" unique_id=639073553]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SHUF:OFF"
+
+[node name="Repeat" type="Button" parent="Margin/Main/ControlDeck" unique_id=572849169]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RPT:ALL"
+
+[node name="VolPanel" type="PanelContainer" parent="Margin/Main/ControlDeck" unique_id=914555685]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HB" type="HBoxContainer" parent="Margin/Main/ControlDeck/VolPanel" unique_id=1125418767]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="Margin/Main/ControlDeck/VolPanel/HB" unique_id=37843113]
+layout_mode = 2
+text = "VOL"
+
+[node name="Vol" type="ProgressBar" parent="Margin/Main/ControlDeck/VolPanel/HB" unique_id=1082818880]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+show_percentage = false
+
+[node name="StatusBar" type="PanelContainer" parent="Margin/Main" unique_id=1525578104]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Header"
+
+[node name="Status" type="Label" parent="Margin/Main/StatusBar" unique_id=589723332]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "STATE: STOPPED"
+
+[node name="Boot" type="Control" parent="." unique_id=1096799071]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("8_boot")
+
+[node name="BG" type="ColorRect" parent="Boot" unique_id=1502331463]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Text" type="Label" parent="Boot" unique_id=1533091792]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+
+[node name="Intro" type="ColorRect" parent="." unique_id=578707567]
+unique_name_in_owner = true
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="IntroVid" type="VideoStreamPlayer" parent="Intro" unique_id=1623180410]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stream = ExtResource("11_intro")
+expand = true
+
+[node name="AudioA" type="AudioStreamPlayer" parent="." unique_id=118130142]
+unique_name_in_owner = true
+
+[node name="AudioB" type="AudioStreamPlayer" parent="." unique_id=794367042]
+unique_name_in_owner = true
+
+[node name="Engine" type="Node" parent="." unique_id=2032138235]
+unique_name_in_owner = true
+script = ExtResource("3_engine")
+
+[node name="Eq" type="Node" parent="." unique_id=196991104]
+unique_name_in_owner = true
+script = ExtResource("7_eq")
+
+[node name="Director" type="Node" parent="." unique_id=407921276]
+unique_name_in_owner = true
+script = ExtResource("2_director")
+
+[node name="TickTimer" type="Timer" parent="." unique_id=779948456]
+unique_name_in_owner = true
+wait_time = 0.12
+autostart = true
+
+[node name="Dialog" type="FileDialog" parent="." unique_id=68568681]
+unique_name_in_owner = true
+title = "Open a Directory"
+initial_position = 1
+size = Vector2i(760, 520)
+ok_button_text = "ADD FOLDER"
+file_mode = 2
+access = 2
+use_native_dialog = true
