@@ -9,7 +9,7 @@ extends Control
 signal finished(user_name: String)
 
 const LINES := [
-	"SOUNDSCAPE BY ZFACTORPSX v1.0",
+	"SOUNDSCAPE FREE VER BY ZFACTORPSX v1.0",
 	"",
 	"MEM TEST 65536K ............ OK",
 	"DETECTING AUDIO DEVICE ..... WASAPI 96000HZ",
@@ -20,6 +20,12 @@ const LINES := [
 	"CALIBRATING PHOSPHOR ....... OK",
 	"",
 ]
+const MESSAGE := """Welcome To SOUNDSCAPE!
+You Are Currently On The Free Version. It is a SOLID Media Player.
+Please Check Out The Full Version By Going To The "STATS" Tab!
+Also, Check Out The Discord!
+Enjoy The Visualizers!!!!
+-ZFACTORPSX"""
 const CHARS_PER_SEC := 150.0
 const MAX_NAME := 16
 
@@ -80,7 +86,7 @@ func _redraw() -> void:
 			out += "\nENTER NAME: " + _typed + _caret()
 		Phase.WELCOME:
 			out += "\nWELCOME BACK " if _returning else "\nWELCOME "
-			out += user_name + "\n\nPRESS SPACE TO ENTER " + _caret()
+			out += user_name + "\n\n" + MESSAGE + "\n\nPRESS SPACE TO ENTER " + _caret()
 	_label.text = out
 
 func _caret() -> String:

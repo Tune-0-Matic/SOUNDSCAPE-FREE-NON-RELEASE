@@ -130,6 +130,7 @@ func _ready() -> void:
 		_filter = s.strip_edges()
 		_refill())
 	%Reboot.pressed.connect(_on_reboot)
+	%FullVer.pressed.connect(func() -> void: OS.shell_open("https://zfactorpsx.itch.io/soundscape"))
 	_setup_fade()
 	_setup_feed()
 	_setup_fps()
@@ -400,7 +401,6 @@ func _pos() -> float: return _video.stream_position if _vid() else _audio.get_pl
 func _playing() -> bool: return _video.is_playing() if _vid() else _audio.playing
 func _paused() -> bool: return _video.paused if _vid() else _audio.stream_paused
 func _seek(t: float) -> void:
-	# ponytail: VideoStreamPlayer seeks to the nearest keyframe; exact only for audio.
 	if _vid(): _video.stream_position = t
 	else: _audio.seek(t)
 
@@ -506,7 +506,6 @@ func _src() -> String:
 	var f := video_path.get_file()
 	return f.to_upper() if f else "DEMO_TONE.WAV"
 
-# ponytail: synthesized so the player runs with an empty library -- harmless once folders are added.
 func _demo_tone() -> AudioStreamWAV:
 	var sr := 22050
 	var buf := PackedByteArray()
@@ -521,7 +520,6 @@ func _demo_tone() -> AudioStreamWAV:
 	s.data = buf
 	return s
 
-# ponytail: mm:ss only -- rolls past 60 min as "61:04", add hours when a source needs it.
 func _fmt(t: float) -> String:
 	return "%02d:%02d" % [int(t) / 60, int(t) % 60]
 

@@ -227,7 +227,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"HeaderLabel"
-text = "SOUNDSCAPE BY ZFACTOR PSX"
+text = "SOUNDSCAPE FREE VER BY ZFACTOR PSX"
 
 [node name="Clock" type="Label" parent="Margin/Main/TopHeaderBar/HB" unique_id=1360811350]
 unique_name_in_owner = true
@@ -739,6 +739,11 @@ text = "SOURCE..DEMO_TONE.WAV"
 unique_name_in_owner = true
 layout_mode = 2
 text = "REBOOT"
+
+[node name="FullVer" type="Button" parent="Margin/Main/Workspace/RightSidebar/Tabs/STATS" unique_id=1702554019]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FULL VER"
 
 [node name="ScrubRow" type="HBoxContainer" parent="Margin/Main" unique_id=638047940]
 unique_name_in_owner = true
